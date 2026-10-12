@@ -1,17 +1,10 @@
 import type { Stage } from "../types";
-
-const labels: Record<Stage, string> = {
-  wishlist: "Saved",
-  applied: "Applied",
-  interview: "Interview",
-  offer: "Offer",
-  closed: "Closed",
-};
+import { stageLabels } from "../lib/applications";
 
 type Props = {
   stage: Stage;
 };
 
 export function StageBadge({ stage }: Props) {
-  return <span data-stage={stage}>{labels[stage]}</span>;
+  return <span data-stage={stage}>{stageLabels[stage]}</span>;
 }
