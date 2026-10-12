@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import type { Application } from "../types";
 import { daysSince, needsNudge } from "../lib/applications";
 import { StageBadge } from "./StageBadge";
@@ -12,7 +13,9 @@ export function ApplicationCard({ application }: Props) {
 
   return (
     <article>
-      <h3>{application.company}</h3>
+      <Link to={`/applications/${application.id}`}>
+        <h3>{application.company}</h3>
+      </Link>
       <p>{application.role}</p>
       <StageBadge stage={application.stage} />
       <p>

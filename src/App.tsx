@@ -1,12 +1,20 @@
-import { ApplicationList } from "./components/ApplicationList";
-import { seedApplications } from "./data/seed";
+import { Route, Routes } from "react-router";
+import { Layout } from "./components/Layout";
+import { ApplicationsPage } from "./pages/ApplicationsPage";
+import { ApplicationPage } from "./pages/ApplicationPage";
+import { NewApplicationPage } from "./pages/NewApplicationPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
-    <main>
-      <h1>Applied</h1>
-      <ApplicationList applications={seedApplications} />
-    </main>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<ApplicationsPage />} />
+        <Route path="/applications/:id" element={<ApplicationPage />} />
+        <Route path="/new" element={<NewApplicationPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
 
