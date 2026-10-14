@@ -7,6 +7,8 @@ import {
   deleteApplication,
 } from "../api/applications";
 
+const LOAD_ERROR = "Something went wrong loading your applications.";
+
 export function useApplications() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,15 +20,32 @@ export function useApplications() {
       setApplications(data);
       setError(null);
     } catch {
-      setError("Something went wrong loading your applications.");
+      setError(LOAD_ERROR);
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    reload();
-  }, [reload]);
+    let cancelled = false;
+
+    fetchApplications()
+      .then((data) => {
+        if (cancelled) return;
+        setApplications(data);
+        setError(null);
+      })
+      .catch(() => {
+        if (!cancelled) setError(LOAD_ERROR);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function add(input: NewApplication) {
     const created = await createApplication(input);
