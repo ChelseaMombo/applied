@@ -7,7 +7,7 @@ type Props = {
 
 export function ApplicationList({ applications }: Props) {
   return (
-    <section>
+    <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {applications.map((application) => (
         <ApplicationCard key={application.id} application={application} />
       ))}
